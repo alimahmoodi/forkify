@@ -1,3 +1,5 @@
+import * as model from './Model';
+import 'regenerator-runtime/runtime';
 import icons from '../img/icons.svg';
 console.log(icons);
 
@@ -32,18 +34,14 @@ const renderSpinner = function (parentEL) {
   parentEL.insertAdjacentHTML('afterbegin', markUp);
 };
 
-const showRecipe = () => {
-  const id = window.location.hash.slice(1);
-  if (!id) return;
-  renderSpinner(recipeContainer);
-  fetch(`https://forkify-api.herokuapp.com/api/v2/recipes/${id}`)
-    .then(res => {
-      return res.json();
-    })
-    .then(data => {
-      const recipe = { ...data.data.recipe };
-      console.log(recipe);
-      const markUp = `<figure class="recipe__fig">
+const showRecipe = async function () {
+  try {
+    const id = window.location.hash.slice(1);
+    if (!id) return;
+    renderSpinner(recipeContainer);
+    await model.loadRecipe(id);
+    const { recipe } = model.state;
+    const markUp = `<figure class="recipe__fig">
         <img src="${recipe.image_url}" />
         <h1 class="recipe__title">
           <span>${recipe.title}</span>
@@ -135,9 +133,9 @@ const showRecipe = () => {
         </svg>
       </a>
     </div>`;
-      recipeContainer.innerHTML = '';
-      recipeContainer.insertAdjacentHTML('afterbegin', markUp);
-    });
+    recipeContainer.innerHTML = '';
+    recipeContainer.insertAdjacentHTML('afterbegin', markUp);
+  } catch {}
 };
 
 // showRecipe();
