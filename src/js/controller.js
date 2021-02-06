@@ -1,26 +1,8 @@
+import '../sass/main.scss';
 import * as model from './Model';
-import 'regenerator-runtime/runtime';
+// import 'regenerator-runtime/runtime';
 import icons from '../img/icons.svg';
-console.log(icons);
-
-// const { async } = require('q');
-
-const { report } = require('process');
-
-// const { async } = require('q');
-
 const recipeContainer = document.querySelector('.recipe');
-
-// const timeout = function (s) {
-//   return new Promise(function (_, reject) {
-//     setTimeout(function () {
-//       reject(new Error(`Request took too long! Timeout after ${s} second`));
-//     }, s * 1000);
-//   });
-// };
-
-// https://forkify-api.herokuapp.com/v2
-
 ///////////////////////////////////////
 
 const renderSpinner = function (parentEL) {
@@ -137,9 +119,6 @@ const showRecipe = async function () {
     recipeContainer.insertAdjacentHTML('afterbegin', markUp);
   } catch {}
 };
-
-// showRecipe();
-
 ['hashchange', 'load'].forEach(event => {
   window.addEventListener(event, showRecipe);
 });
